@@ -1,32 +1,41 @@
 @echo off
-title EWT - github.com/LouSkull/EasyWindowsTool
+title EWT FreeV2 - https://vk.com/easytool
 start Am.vbs
+
+mode 200,60
+
+net session >nul 2>&1
+if %errorLevel% neq 0 (
+
+:spam
+    echo Этот скрипт должен быть запущен с правами администратора!
+    goto spam
+    pause
+    exit /b 1
+)
 
 
 :menu
-color 6
-mode 200,50
 echo.
-echo                                                                        ███████╗██╗    ██╗████████╗ ██████╗  ██████╗ ██╗     
-echo                                                                        ██╔════╝██║    ██║╚══██╔══╝██╔═══██╗██╔═══██╗██║     
-echo                                                                        █████╗  ██║ █╗ ██║   ██║   ██║   ██║██║   ██║██║     
-echo                                                                        ██╔══╝  ██║███╗██║   ██║   ██║   ██║██║   ██║██║     
-echo                                                                        ███████╗╚███╔███╔╝   ██║   ╚██████╔╝╚██████╔╝███████╗
-echo                                                                        ╚══════╝ ╚══╝╚══╝    ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝
+echo                                                     ███████╗██╗    ██╗████████╗              ███████╗██████╗ ███████╗███████╗    ██╗   ██╗██████╗ 
+echo                                                     ██╔════╝██║    ██║╚══██╔══╝              ██╔════╝██╔══██╗██╔════╝██╔════╝    ██║   ██║╚════██╗
+echo                                                     █████╗  ██║ █╗ ██║   ██║       █████╗    █████╗  ██████╔╝█████╗  █████╗      ██║   ██║ █████╔╝
+echo                                                     ██╔══╝  ██║███╗██║   ██║       ╚════╝    ██╔══╝  ██╔══██╗██╔══╝  ██╔══╝      ╚██╗ ██╔╝██╔═══╝ 
+echo                                                     ███████╗╚███╔███╔╝   ██║                 ██║     ██║  ██║███████╗███████╗     ╚████╔╝ ███████╗
+echo                                                     ╚══════╝ ╚══╝╚══╝    ╚═╝                 ╚═╝     ╚═╝  ╚═╝╚══════╝╚══════╝      ╚═══╝  ╚══════╝
 echo.
 echo.
-echo                                                                               https://github.com/LouSkull/EasyWindowsTool
 echo                                                               ==========================================================================
-echo                                                               Версия: 1.8                 Главное меню          Пользователь: %USERNAME%            
+echo                                                                                             Главное меню                                    
 echo                                                               ==========================================================================
 echo.
-echo                                                              [1] Управление диспетчером задач      A          [8] Мой IP
-echo                                                              [2] Информация о системе              B          [9] Сброс реестра 
-echo                                                              [3] Удаление временных файлов         C          [10] Выключить компьютер
-echo                                                              [4] Управление Windows Defender       D          [11] Сброс Userinit
-echo                                                              [5] Авто запуск                       E          [12] Очистка Буфер обмена
-echo                                                              [6] Мониторинг ресурсов               F          [13] Бесплатный VPN
-echo                                                              [7] Обновление системы                G          [14] Сканирование на вирусы
+echo                                                               1. Управление диспетчером задач      !           8. Мой IP
+echo                                                               2. Информация о системе              !           9. Сброс реестра 
+echo                                                               3. Удаление временных файлов         !           10. Выключить компьютер
+echo                                                               4. Управление Windows Defender       !           11. Сброс Userinit
+echo                                                               5. Авто запуск                       !           12. Настройки
+echo                                                               6. Мониторинг ресурсов               !           13. Выход
+echo                                                               7. Обновление системы                !           14. Сканирование на вирусы
 echo.
 echo.
 echo.
@@ -36,6 +45,26 @@ echo.
 echo.
 set /p choice=[*] Введите номер функции: 
 
+if "%choice%" == "14" (
+    cls
+    @echo off
+setlocal
+
+echo Запуск сканирования антивирусом...
+
+start /wait "" "C:\Program Files\Windows Defender\MpCmdRun.exe" -Scan -ScanType 2
+
+if %errorlevel% equ 0 (
+    echo Сканирование завершено без обнаружения угроз.
+) else (
+    echo Обнаружены угрозы во время сканирования.
+)
+
+endlocal
+    pause
+    cls
+    goto menu
+)
 
 if "%choice%" == "1" (  
 
@@ -325,6 +354,94 @@ exit /b
     goto menu
 )
 
+if "%choice%"=="13" (
+    echo Выход.
+    exit /b
+)
+
+if "%choice%"=="12" (
+    cls
+    @echo off
+    echo.
+    echo                                                               ==========================================================================
+    echo                                                                                              Настройки                                        
+    echo                                                               ==========================================================================
+    echo.
+    echo                                                                                 1. Установить цвет ! 2. Обновлять
+    echo                                                                                         3. Вернуться в меню
+    set /p Settings=[*] Введите номер функции: 
+    echo.
+    echo.
+
+if "%Settings%" == "1" (
+    cls
+    :ColorMenu
+    echo.
+    echo                                                               ==========================================================================
+    echo                                                                                           Настройки цвета                                
+    echo                                                               ==========================================================================
+    echo.
+    echo                                                                                  1. По умолчанию  ! 2. Красный
+    echo                                                                                  3. Зеленый       ! 4. Голубой
+    echo                                                                                  5. Серый         ! 6. Назад к меню
+
+    set /p ColorChoice=[*] Введите номер функции: 
+
+    if "%ColorChoice%" == "1" (
+        color F
+        cls
+        goto ColorMenu
+    )
+
+    if "%ColorChoice%" == "2" (
+        color 4
+        cls
+        goto ColorMenu
+    )
+
+    if "%ColorChoice%" == "3" (
+        color 2
+        cls
+        goto ColorMenu
+    )
+
+    if "%ColorChoice%" == "4" (
+        color 3
+        cls
+        goto ColorMenu
+    )
+
+    if "%ColorChoice%" == "5" (
+        color 8
+        cls
+        goto ColorMenu
+    )
+
+    if "%ColorChoice%" == "6" (
+        cls
+        goto menu
+    )
+
+    pause
+    cls
+    goto menu
+)
+
+if "%Settings%" == "3" (    
+cls
+goto menu
+)
+
+if "%Settings%" == "2" (
+start "" "https://vk.com/easytool"
+cls
+goto menu
+)
+
+    pause
+    cls
+    goto menu
+)
 
 if "%choice%" == "11" (
 cls
@@ -333,44 +450,12 @@ cls
 goto menu
 )
 
-if "%choice%"=="12" (
-    cls
-    @echo off
-    echo. | clip
-    echo Буфер обмена очищен.
-    pause
-)
-
-if "%choice%"=="13" (
-    cls
-    @echo off
-    echo In development...
-    pause
-)
-
-if "%choice%" == "14" (
-    cls
-    @echo off
-setlocal
-
-echo Запуск сканирования антивирусом...
-
-start /wait "" "C:\Program Files\Windows Defender\MpCmdRun.exe" -Scan -ScanType 2
-
-if %errorlevel% equ 0 (
-    echo Сканирование завершено без обнаружения угроз.
-) else (
-    echo Обнаружены угрозы во время сканирования.
-)
-
-endlocal
-    pause
-    cls
-    goto menu
-)
 
 
 echo Неверный ответ. Пожалуйста, выберите еще раз.
 pause
      cls
      goto menu
+end
+    end
+        end
